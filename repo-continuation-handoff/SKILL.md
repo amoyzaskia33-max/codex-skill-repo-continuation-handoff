@@ -7,7 +7,7 @@ description: Use when finishing substantial repo work or preparing a project for
 
 ## Overview
 
-Leave the repository in a state where a future Codex agent can continue with minimal chat history. The repo itself should explain the current system state, the latest plans, the next sensible steps, and how to verify the setup.
+Leave the repository in a state where a future Codex agent can continue with minimal chat history and without silently regressing existing features. The repo itself should explain the current system state, the latest plans, the next sensible steps, what was completed most recently, and what must not change without approval.
 
 ## When to Use
 
@@ -39,11 +39,16 @@ Do not use this for tiny one-off edits that do not change repo understanding.
    - what the project is
    - where the source of truth lives
    - which docs should be read first
+   - which plan is currently active
+   - what was completed most recently
+   - what should be continued next
    - current implemented state
+   - locked features that must not regress
+   - things that must not change without approval
    - important constraints
    - verification commands
    - operator loop if relevant
-   - most natural next steps
+   - a copy-paste prompt for future sessions
    - latest important commits or milestones
 
 4. Add a short pointer in `README.md`.
@@ -72,13 +77,19 @@ Use this structure when it fits:
 
 ## Start Here
 ## Read Order
+## Current Active Plan
+## Last Completed Work
+## Continue From Here
 ## Historical Context
 ## Current System State
+## Locked Features / Non-Regression
+## Do Not Change Without Approval
 ## Important Constraints
 ## Verification Commands
 ## Local Operator Loop
 ## Latest Implementation Landmarks
 ## Best Next Steps
+## Prompt for Future Sessions
 ## Working Style
 ```
 
@@ -88,8 +99,12 @@ Keep it concise. Prefer operational facts over long narrative.
 
 Good:
 - exact file paths for plans
+- one clearly named active plan
+- a short "last completed work" section
+- a short "continue from here" section
 - current verification commands that actually pass
 - real constraints like "still file-backed JSON" or "still unofficial Baileys"
+- explicit non-regression features
 - specific next steps in priority order
 
 Bad:
@@ -97,6 +112,7 @@ Bad:
 - file-by-file changelog dumps
 - duplicating the entire conversation
 - pretending the repo is clean when it is not
+- leaving the next agent to infer which features are safe to touch
 
 ## Common Mistakes
 
@@ -106,7 +122,21 @@ Bad:
 - Treating old worktrees as still active after merge
 - Cleaning status by committing unrelated files
 - Forgetting to record how to run or verify the current system
+- Forgetting to name the currently active plan
+- Forgetting to record the last completed milestone
+- Forgetting to state which features must not disappear
+
+## Required Continuation Guardrail
+
+When this skill is used, the next agent should be able to open `AGENTS.md` and answer these questions before coding:
+- What is the active plan?
+- What was the last completed work?
+- What is the immediate next continuation target?
+- Which existing features are locked and must not regress?
+- Which changes require explicit approval before scope changes?
+
+If those answers are not obvious from the repo handoff, the handoff is incomplete.
 
 ## Default Rule
 
-If a user wants future continuation to be easy, the next agent should be able to open the repo, read `AGENTS.md`, then continue without needing the full chat transcript.
+If a user wants future continuation to be easy, the next agent should be able to open the repo, read `AGENTS.md`, identify the active plan and locked features, then continue without needing the full chat transcript.

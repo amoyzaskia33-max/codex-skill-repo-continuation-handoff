@@ -12,6 +12,9 @@ The skill guides an agent to:
 - create or update a repo-level `AGENTS.md`
 - add a short continuation pointer in `README.md`
 - preserve only high-signal context for the next agent
+- record the active plan, last completed work, and immediate continuation target
+- lock existing features that must not regress
+- note which changes require approval before scope shifts
 
 The result is a repo that answers:
 - what this project is
@@ -66,6 +69,10 @@ When the skill is used well, the target repo usually ends up with:
 - a repo-root `AGENTS.md`
 - a short continuation pointer in `README.md`
 - clear references to the latest relevant plans
+- a named active plan
+- a last completed work section
+- a continue from here section
+- a locked features / non-regression section
 - explicit next steps and verification commands
 
 ## Example Prompt
