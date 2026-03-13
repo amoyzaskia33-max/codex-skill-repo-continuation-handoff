@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Continuation Handoff"
+  short_description: "Prepare repos for seamless future continuation"
+  default_prompt: "Use $repo-continuation-handoff to prepare this repo so future agents can resume instantly."
