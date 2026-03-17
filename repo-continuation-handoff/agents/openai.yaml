@@ -1,4 +1,4 @@
 interface:
-  display_name: "Repo Continuation Handoff"
-  short_description: "Prepare repos for seamless future continuation"
-  default_prompt: "Use $repo-continuation-handoff to prepare this repo so future agents can resume instantly."
+  display_name: "Repo Continuation"
+  short_description: "Resume repos cleanly across sessions without goal drift"
+  default_prompt: "Use $repo-continuation-handoff to recover or prepare repo continuity: pin the main goal, current scope, last completed work, next step, non-regression rules, and future-session handoff."

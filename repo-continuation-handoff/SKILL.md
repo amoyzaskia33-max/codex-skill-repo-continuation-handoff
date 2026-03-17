@@ -1,74 +1,125 @@
 ---
 name: repo-continuation-handoff
-description: Use when finishing substantial repo work or preparing a project for another Codex agent so future sessions can immediately understand what the repo is, what has been completed, and what should be continued next.
+description: Use when resuming repo work across sessions or preparing a repo for future continuation. Trigger on requests like "continue this repo", "lanjutkan", "pick up from last session", "buat handoff", or when goals drift between sessions. Establish and maintain one source of truth for the main goal, current scope, completed work, progress status, next step, locked behavior, approval boundaries, and verification so every future agent can continue cleanly without the full chat history.
 ---
 
-# Repo Continuation Handoff
+# Repo Continuation and Handoff
 
-## Overview
+## Objective
 
-Leave the repository in a state where a future Codex agent can continue with minimal chat history and without silently regressing existing features. The repo itself should explain the current system state, the latest plans, the next sensible steps, what was completed most recently, and what must not change without approval.
+Make continuation cheap in tokens and stable in focus. A future agent should be able to open the repo, read one anchor document, and continue without reconstructing the whole conversation.
 
-## When to Use
+## Core Rules
 
-Use this skill when:
-- a user says to "rapikan dulu", "biar agent lain bisa lanjut", "siapkan handoff", or similar
-- a substantial feature has just been finished and continuity matters
-- a repo has scattered plans, worktrees, or implicit context that should be consolidated
-- you want the next session to succeed even without the full conversation history
+- Create one authoritative continuation anchor, usually repo-root `AGENTS.md`.
+- Separate `main goal` from `current session scope`.
+- Batch work by checkpoints; do not optimize for per-keystroke live pairing.
+- Prefer one clearly named active plan.
+- Record non-regression rules and approval boundaries.
+- End substantial sessions with an in-repo handoff, not only a chat summary.
+- Treat continuity as a repeating protocol for every session, not a one-time handoff step.
+- Preserve useful prior continuity notes; normalize and extend them instead of replacing them with a new style every session.
 
-Do not use this for tiny one-off edits that do not change repo understanding.
+## Bundled References
 
-## Workflow
+- Read `references/agents-template.md` when creating or normalizing repo-root `AGENTS.md`.
+- Read `references/session-checklist.md` when resuming a repo, writing a handoff, or coordinating with a user working from an IDE or CLI.
+- Read `references/continuity-protocol.md` when you need the full cadence for start-of-session, mid-session checkpoint, and end-of-session updates.
 
-1. Gather the current repo truth.
-   Check:
-   - current branch and git status
-   - latest relevant commits
-   - latest design/plan documents
-   - current verification status (`npm test`, build, or equivalent)
-   - any remaining constraints or known gaps
+## Mandatory Continuity Protocol
 
-2. Consolidate to the repo that should be considered primary.
-   - Prefer one clear source repo/branch.
-   - If feature work was done in a worktree and is already merged, remove stale worktree references from the handoff.
-   - Never hide unresolved branches or dirty state; surface them clearly.
+When this skill is active, every agent should maintain the same continuity shape:
 
-3. Create or update a repo-root `AGENTS.md`.
-   Include only high-signal context:
-   - what the project is
-   - where the source of truth lives
-   - which docs should be read first
-   - which plan is currently active
-   - what was completed most recently
-   - what should be continued next
-   - current implemented state
-   - locked features that must not regress
-   - things that must not change without approval
-   - important constraints
-   - verification commands
-   - operator loop if relevant
-   - a copy-paste prompt for future sessions
-   - latest important commits or milestones
+1. Start the session by reading and trusting the current continuation anchor.
+2. Repair missing or stale continuity fields before coding.
+3. Keep work inside the declared session scope.
+4. Update progress after meaningful milestones, not only at the very end.
+5. End the session by leaving the repo in a continuation-ready state again.
 
-4. Add a short pointer in `README.md`.
-   Do not duplicate the whole handoff. Add a short "continue here" section that points to:
-   - `AGENTS.md`
-   - the newest relevant plans
+Do not treat `AGENTS.md` as archival prose. Treat it as the shared operating note for the next agent.
 
-5. Clean repo context where appropriate.
-   - If plan files are important historical context and truly belong in the repo, stage and commit them.
-   - Do not commit unrelated user files just to make `git status` clean.
-   - If untracked files remain intentionally, explain that explicitly.
+## Session Cadence
 
-6. Finish with a continuation-ready summary.
-   State plainly:
-   - repo is or is not clean
-   - where the next agent should start
-   - what is implemented
-   - what the next likely continuation options are
+Use this three-phase rhythm for every substantial session:
 
-## Recommended `AGENTS.md` Shape
+### Start of session
+
+- Read `AGENTS.md`
+- identify the main goal
+- identify the current session scope
+- identify the last completed work
+- identify the next step
+- restate the scope before doing substantial work
+
+### During the session
+
+- keep one narrow working scope
+- if scope changes, update the anchor intentionally
+- after a meaningful milestone, refresh `Last Completed Work`, `Continue From Here`, and verification notes
+- if the user works in an IDE or CLI, re-read saved files before continuing
+
+### End of session
+
+- update the continuation anchor
+- record what was completed in this session
+- record what remains
+- record the immediate next step
+- record verification status honestly
+- leave the next agent with a clear, single starting point
+
+## Resume Workflow
+
+1. Read the continuation anchor before coding.
+2. Answer these questions explicitly:
+   - What is the main goal?
+   - What is the current session scope?
+   - What was completed most recently?
+   - What is the immediate next step?
+   - What must not regress?
+   - What requires approval before changing?
+3. Repair the anchor first if those answers are not obvious.
+4. Restate the active scope in chat before substantial work.
+5. Stay inside the current scope unless the user expands it.
+6. Re-read saved files when collaborating with a user in an IDE; do not assume live unsaved editor state.
+7. Update the anchor after meaningful progress, not only at the end.
+
+## Handoff Workflow
+
+1. Gather repo truth:
+   - branch and dirty state
+   - active plan docs
+   - latest completed milestone
+   - verification status
+   - known gaps or open questions
+2. Consolidate to one source of truth:
+   - prefer repo-root `AGENTS.md`
+   - point to detailed plans instead of duplicating them
+   - mark stale plans or worktrees as inactive or historical
+   - if `AGENTS.md` already exists, preserve valid facts and normalize structure instead of rewriting blindly
+3. Create or update the continuation anchor with these sections:
+   - `Start Here`
+   - `Main Goal`
+   - `Current Session Scope`
+   - `Active Plan`
+   - `Last Completed Work`
+   - `Continue From Here`
+   - `Current System State`
+   - `Locked Features / Non-Regression`
+   - `Do Not Change Without Approval`
+   - `Verification Commands`
+   - `Open Questions / Known Gaps`
+   - `Prompt for Future Sessions`
+4. Add or refresh a short pointer in `README.md`.
+5. Finish with a concise chat summary that matches the repo handoff.
+6. Make sure the updated repo state would still make sense if a third or fourth agent continued after the next one.
+7. Run a consistency check across the anchor:
+   - `Current Session Scope`
+   - `Continue From Here`
+   - `Open Questions / Known Gaps`
+   - `Prompt for Future Sessions`
+   These fields should describe the same continuation state and should not contradict or duplicate each other.
+
+## Default Continuation Anchor
 
 Use this structure when it fits:
 
@@ -76,67 +127,83 @@ Use this structure when it fits:
 # <Project> Agent Notes
 
 ## Start Here
-## Read Order
-## Current Active Plan
+## Main Goal
+## Current Session Scope
+## Active Plan
 ## Last Completed Work
 ## Continue From Here
-## Historical Context
 ## Current System State
 ## Locked Features / Non-Regression
 ## Do Not Change Without Approval
-## Important Constraints
 ## Verification Commands
-## Local Operator Loop
-## Latest Implementation Landmarks
-## Best Next Steps
+## Open Questions / Known Gaps
 ## Prompt for Future Sessions
-## Working Style
 ```
 
-Keep it concise. Prefer operational facts over long narrative.
+Keep sections short and operational.
 
-## Good Handoff Content
+## Session Prompt Templates
 
-Good:
-- exact file paths for plans
-- one clearly named active plan
-- a short "last completed work" section
-- a short "continue from here" section
-- current verification commands that actually pass
-- real constraints like "still file-backed JSON" or "still unofficial Baileys"
-- explicit non-regression features
-- specific next steps in priority order
+Use this at the start of a new session:
 
-Bad:
-- vague phrases like "project mostly done"
-- file-by-file changelog dumps
-- duplicating the entire conversation
-- pretending the repo is clean when it is not
-- leaving the next agent to infer which features are safe to touch
+```text
+Main goal:
+Current session scope:
+Already done:
+Do not change:
+Definition of done:
+
+Continue only within this scope.
+```
+
+Use this at the end of a substantial session:
+
+```text
+Handoff:
+- main goal
+- current session scope
+- completed this session
+- remaining work
+- locked features
+- changed files
+- verification status
+- next step
+```
+
+## Anti-Drift Guardrails
+
+- Treat `main goal` as durable and `current session scope` as temporary.
+- Prefer one goal per session.
+- Do not restart from a full repo audit unless asked or the anchor is missing.
+- Do not rely on chat-only context for future continuation.
+- Use the agent mainly at checkpoints: planning, review, debugging, validation, and handoff.
+- If the user is implementing elsewhere, wait for saved files, then re-read them before reviewing or continuing.
+- When IDE, CLI, and agent work coexist, treat saved repo files plus `AGENTS.md` as the shared source of truth.
+- Keep the continuity format stable across agents so the repo does not accumulate incompatible handoff styles.
+- Before ending the session, scan for stale scope lines or duplicated open questions inside the anchor.
 
 ## Common Mistakes
 
-- Writing a long summary in chat but not storing it in the repo
-- Updating `README.md` but forgetting a dedicated `AGENTS.md`
-- Leaving multiple candidate plans without saying which one is current
-- Treating old worktrees as still active after merge
-- Cleaning status by committing unrelated files
-- Forgetting to record how to run or verify the current system
-- Forgetting to name the currently active plan
-- Forgetting to record the last completed milestone
-- Forgetting to state which features must not disappear
+- Mixing goal, scope, and next step into one vague paragraph
+- Leaving multiple active plans without naming the current one
+- Writing only a chat summary and no repo handoff
+- Expanding scope during a narrow bugfix session without approval
+- Forgetting approval boundaries
+- Forgetting to update verification after major changes
+- Updating only the final summary while leaving stale progress fields in the anchor
+- Rewriting the continuation anchor in a new style every session so later agents must re-parse it from scratch
+- Updating `Prompt for Future Sessions` but forgetting to sync `Current Session Scope` or `Continue From Here`
+- Leaving duplicate items in `Open Questions / Known Gaps`
 
-## Required Continuation Guardrail
+## Completion Test
 
-When this skill is used, the next agent should be able to open `AGENTS.md` and answer these questions before coding:
-- What is the active plan?
-- What was the last completed work?
-- What is the immediate next continuation target?
-- Which existing features are locked and must not regress?
-- Which changes require explicit approval before scope changes?
+Before considering the handoff complete, make sure a fresh agent can answer:
 
-If those answers are not obvious from the repo handoff, the handoff is incomplete.
+- What is the main goal?
+- What is the scope for the next session?
+- What was completed most recently?
+- What is the immediate next step?
+- What must not regress?
+- What requires approval before changing?
 
-## Default Rule
-
-If a user wants future continuation to be easy, the next agent should be able to open the repo, read `AGENTS.md`, identify the active plan and locked features, then continue without needing the full chat transcript.
+If not, keep refining the continuation anchor.
