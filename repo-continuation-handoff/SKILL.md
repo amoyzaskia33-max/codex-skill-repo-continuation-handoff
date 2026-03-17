@@ -23,8 +23,8 @@ Make continuation cheap in tokens and stable in focus. A future agent should be 
 ## Bundled References
 
 - Read `references/agents-template.md` when creating or normalizing repo-root `AGENTS.md`.
-- Read `references/session-checklist.md` when resuming a repo, writing a handoff, or coordinating with a user working from an IDE or CLI.
-- Read `references/continuity-protocol.md` when you need the full cadence for start-of-session, mid-session checkpoint, and end-of-session updates.
+- Read `references/session-checklist.md` when resuming a repo, writing a handoff, coordinating with a user working from an IDE or CLI, or deciding whether a checkpoint only needs `Session Log` updates.
+- Read `references/continuity-protocol.md` when you need the full cadence for start-of-session, mid-session checkpoint, end-of-session updates, and anchor-maintenance decisions.
 
 ## Mandatory Continuity Protocol
 
@@ -55,6 +55,8 @@ Use this three-phase rhythm for every substantial session:
 
 - keep one narrow working scope
 - if scope changes, update the anchor intentionally
+- if the direction is unchanged, log the checkpoint in `Session Log` and refresh `Last Completed Work` only when it adds real signal
+- if scope, next step, progress state, or verification meaningfully changes, update the anchor fields and not only `Session Log`
 - after a meaningful milestone, refresh `Last Completed Work`, `Continue From Here`, and verification notes
 - if the user works in an IDE or CLI, re-read saved files before continuing
 
@@ -169,6 +171,22 @@ Handoff:
 - verification status
 - next step
 ```
+
+## Anchor Maintenance Decision Rule
+
+Use this quick rule during continuation work:
+
+- `Session Log only` when the main goal, current session scope, active plan, non-regression rules, approval boundaries, and immediate next step are still materially the same.
+- Update the main anchor sections when any of these change materially:
+  - `Main Goal`
+  - `Current Session Scope`
+  - `Active Plan`
+  - `Current Progress Status`
+  - `Continue From Here`
+  - `Open Questions / Known Gaps`
+  - verification status
+
+If the next agent could read the current `Session Log` and still continue safely, a log-only update is usually enough. If the next agent could drift or misread the repo state, update the anchor itself.
 
 ## Anti-Drift Guardrails
 

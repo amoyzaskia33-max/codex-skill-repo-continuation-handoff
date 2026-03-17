@@ -39,6 +39,44 @@ Then check that these fields agree with each other:
 
 Store this in the repo, not only in chat.
 
+## When `Session Log` Is Enough
+
+Use a concise `Session Log` update when:
+
+- the main goal is unchanged
+- the current session scope is unchanged
+- the active plan is unchanged
+- locked behavior is unchanged
+- approval boundaries are unchanged
+- the immediate next step is still materially the same
+
+Typical examples:
+
+- one small subtask finished inside the same scope
+- a bug root cause was found but the plan is unchanged
+- one verification command was run successfully
+- an IDE-saved file was re-read and continuity did not shift
+
+If needed, refresh `Last Completed Work` too, but do not rewrite the whole anchor just to record a small checkpoint.
+
+## When the Main Anchor Must Be Updated
+
+Update `AGENTS.md` beyond `Session Log` when any of these shift materially:
+
+- `Main Goal`
+- `Current Session Scope`
+- `Active Plan`
+- `Current Progress Status`
+- `Continue From Here`
+- `Open Questions / Known Gaps`
+- verification state
+- locked behavior or approval boundaries
+
+Rule of thumb:
+
+- if the next agent could misread the current direction, update the anchor
+- if the prompt for the next session should change, update the anchor
+
 ## Anti-Drift Rules
 
 - One main goal can span many sessions.

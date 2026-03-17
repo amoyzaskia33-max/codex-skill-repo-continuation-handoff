@@ -21,6 +21,7 @@ The result is a repo that answers:
 - what has already been implemented
 - what constraints still matter
 - what should be continued next
+- whether the anchor fields still match the real current checkpoint
 
 ## Skill Layout
 
@@ -32,6 +33,16 @@ repo-continuation-handoff/
 ```
 
 ## Install
+
+### Option 0: Install with Codex `skill-installer`
+
+If Codex already has the built-in `skill-installer`, you can install this skill from GitHub by pointing to the repo path:
+
+```text
+Use $skill-installer to install the skill from GitHub repo amoyzaskia33-max/codex-skill-repo-continuation-handoff path repo-continuation-handoff.
+```
+
+After installing, restart Codex so the new skill is loaded.
 
 ### Option 1: Manual copy
 
@@ -62,6 +73,8 @@ Use this skill when:
 - preparing a repo for another Codex agent
 - cleaning up context before stopping
 - making sure future continuation does not depend on the full chat transcript
+- keeping continuity stable across IDE, CLI, and multiple future agents
+- deciding whether a checkpoint only needs `Session Log` updates or requires a wider `AGENTS.md` refresh
 
 ## Typical Result In A Repo
 

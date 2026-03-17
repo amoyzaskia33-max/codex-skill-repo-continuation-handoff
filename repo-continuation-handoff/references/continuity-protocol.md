@@ -54,6 +54,11 @@ Do this when:
 - a test milestone is reached
 - scope changes with user approval
 
+Use this checkpoint decision rule:
+
+- if the goal, scope, plan, and next step are still materially the same, a `Session Log` update is often enough
+- if progress state, next step, verification state, or scope materially changes, update the anchor fields and not only the log
+
 ## End of Session Protocol
 
 Before stopping:
@@ -73,6 +78,7 @@ Before stopping:
 - Keep `main goal` durable.
 - Keep `current session scope` narrow.
 - Keep `session log` short and recent.
+- Keep `Session Log` as a checkpoint trail, not as a substitute for stale anchor fields.
 
 ## Good Outcome
 
