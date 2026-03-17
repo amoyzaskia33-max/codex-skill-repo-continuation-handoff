@@ -25,6 +25,7 @@ Make continuation cheap in tokens and stable in focus. A future agent should be 
 - Read `references/agents-template.md` when creating or normalizing repo-root `AGENTS.md`.
 - Read `references/session-checklist.md` when resuming a repo, writing a handoff, coordinating with a user working from an IDE or CLI, or deciding whether a checkpoint only needs `Session Log` updates.
 - Read `references/continuity-protocol.md` when you need the full cadence for start-of-session, mid-session checkpoint, end-of-session updates, and anchor-maintenance decisions.
+- Read `references/continuity-validation.md` when you want stronger evidence that continuity will hold for a truly fresh future agent.
 
 ## Mandatory Continuity Protocol
 
@@ -225,3 +226,5 @@ Before considering the handoff complete, make sure a fresh agent can answer:
 - What requires approval before changing?
 
 If not, keep refining the continuation anchor.
+
+For stronger evidence, run a blind fresh-agent resume test and, when useful, a small repo-local continuity checker.

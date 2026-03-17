@@ -22,6 +22,7 @@ The result is a repo that answers:
 - what constraints still matter
 - what should be continued next
 - whether the anchor fields still match the real current checkpoint
+- whether a truly fresh future agent can resume from saved repo files alone
 
 ## Skill Layout
 
@@ -75,6 +76,7 @@ Use this skill when:
 - making sure future continuation does not depend on the full chat transcript
 - keeping continuity stable across IDE, CLI, and multiple future agents
 - deciding whether a checkpoint only needs `Session Log` updates or requires a wider `AGENTS.md` refresh
+- validating continuity with a blind fresh-agent resume test or a small repo-local checker
 
 ## Typical Result In A Repo
 
@@ -87,6 +89,7 @@ When the skill is used well, the target repo usually ends up with:
 - a continue from here section
 - a locked features / non-regression section
 - explicit next steps and verification commands
+- optional continuity validation such as a blind fresh-agent resume test or a repo-local checker
 
 ## Example Prompt
 
